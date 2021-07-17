@@ -33,10 +33,14 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    "@nuxtjs/auth-next",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    baseUrl: "http://localhost:8000",
+    credentials: true,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
@@ -47,5 +51,14 @@ export default {
     configPath: "tailwind.config.js",
     exposeConfig: false,
     config: {},
+  },
+
+  auth: {
+    strategies: {
+      laravelSanctum: {
+        provider: "laravel/sanctum",
+        url: "http://localhost:8000",
+      },
+    },
   },
 };

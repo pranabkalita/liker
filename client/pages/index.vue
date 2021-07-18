@@ -1,7 +1,10 @@
 <template>
   <div class="bg-white shadow-sm rounded p-6 border border-gray-300">
     <div class="border-b pb-6">
-      <AppPostForm />
+      <AppPostForm v-if="$auth.loggedIn" />
+      <p v-else>
+        <nuxt-link :to="{ name: 'login' }" class="text-indigo-500">Login</nuxt-link> to post !
+      </p>
     </div>
 
     <AppPost v-for="post in posts" :key="post.id" :post="post" />

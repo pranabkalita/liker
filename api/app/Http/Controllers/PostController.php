@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostCreated;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -38,6 +39,8 @@ class PostController extends Controller
     ]);
 
     $post = $request->user()->posts()->create($request->only('body'));
+
+    broadcast(new PostCreated($post));
 
     return new PostResource($post);
   }

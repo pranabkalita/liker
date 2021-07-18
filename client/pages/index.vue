@@ -45,6 +45,11 @@ export default {
 
   mounted() {
     this.getPostsAction();
+    console.log('HERE');
+    this.$echo.channel('posts')
+      .listen('PostCreated', (e) => {
+        console.log('Data: ', e);
+      });
   }
 };
 </script>

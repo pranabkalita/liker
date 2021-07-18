@@ -31,6 +31,7 @@ export default {
     ...mapActions({
       getPostsAction: 'posts/getPosts',
       getMorePostsAction: 'posts/getMorePosts',
+      getSinglePostAction: 'posts/getSinglePost'
     }),
 
     visibilityChanged(isVisible) {
@@ -48,7 +49,7 @@ export default {
     console.log('HERE');
     this.$echo.channel('posts')
       .listen('PostCreated', (e) => {
-        console.log('Data: ', e);
+        this.getSinglePostAction(e.post_id);
       });
   }
 };

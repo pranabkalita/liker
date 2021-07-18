@@ -44,6 +44,7 @@ export default {
       let prependedPost = await this.$axios.post("api/posts", post);
 
       commit("PREPENDED_POSTS", prependedPost.data.data);
+      commit("APPEND_LIKES", prependedPost.data.likes);
     },
 
     async getPosts({ commit }) {
@@ -65,9 +66,14 @@ export default {
     async createLike({ commit }, postId) {
       let like = await this.$axios.post(`api/posts/${postId}/like`);
 
-      console.log(like);
-
       commit("SET_LIKES", { postId, likeCount: like.data.likes });
+    },
+
+    async getSinglePost({ commit }, postId) {
+      let post = await this.$axios.get(`api/posts/${postId}`);
+
+      commit("PREPENDED_POSTS", post.data.data);
+      commit("APPEND_LIKES", post.data.likes);
     }
   }
 };

@@ -32,6 +32,15 @@ class PostController extends Controller
     ]);
   }
 
+  public function show(Post $post)
+  {
+    return (new PostResource($post))->additional([
+      'likes' => [
+        $post->id => $post->likes->count()
+      ]
+    ]);
+  }
+
   public function store(Request $request)
   {
     $this->validate($request, [
@@ -40,8 +49,12 @@ class PostController extends Controller
 
     $post = $request->user()->posts()->create($request->only('body'));
 
-    broadcast(new PostCreated($post));
+    broadcast(new PostCreated($post))->toOthers();
 
-    return new PostResource($post);
+    return (new PostResource($post))->additional([
+      'likes' => [
+        $post->id => $post->likes->count()
+      ]
+    ]);
   }
 }

@@ -12,7 +12,7 @@
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link :to="{ name: 'index' }" class="text-indigo-500 mx-3">
+          <nuxt-link :to="{ name: 'register' }" class="text-indigo-500 mx-3">
             Register
           </nuxt-link>
         </li>

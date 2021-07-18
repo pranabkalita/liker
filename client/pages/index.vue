@@ -4,14 +4,28 @@
       <AppPostForm />
     </div>
 
-    <AppPost />
-    <AppPost />
-    <AppPost />
-    <AppPost />
-    <AppPost />
+    <AppPost v-for="post in posts" :key="post.id" :post="post" />
   </div>
 </template>
 
 <script>
-export default {};
+import { mapActions, mapGetters } from 'vuex';
+
+export default {
+  computed: {
+    ...mapGetters({
+      posts: 'posts/posts'
+    })
+  },
+
+  methods: {
+    ...mapActions({
+      getPostsAction: 'posts/getPosts'
+    })
+  },
+
+  mounted() {
+    this.getPostsAction();
+  }
+};
 </script>

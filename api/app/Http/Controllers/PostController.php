@@ -24,7 +24,11 @@ class PostController extends Controller
             ->latest()
             ->get();
 
-    return PostResource::collection($posts);
+    return (PostResource::collection($posts))->additional([
+      'likes' => $posts->mapWithKeys(function($post) {
+        return [$post->id => $post->likes->count()];
+      })
+    ]);
   }
 
   public function store(Request $request)

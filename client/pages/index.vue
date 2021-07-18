@@ -22,7 +22,8 @@ export default {
 
   computed: {
     ...mapGetters({
-      posts: 'posts/posts'
+      posts: 'posts/posts',
+      likes: 'posts/likes',
     })
   },
 

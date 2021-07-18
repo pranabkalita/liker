@@ -11,7 +11,7 @@
     </div>
 
     <div>
-      <AppPostLike />
+      <AppPostLike :post="post" />
     </div>
   </div>
 </template>

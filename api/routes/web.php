@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\Test;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
+});
+
+Route::get('/test', function () {
+  broadcast(new Test());
 });

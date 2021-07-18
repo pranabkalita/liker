@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   data() {
@@ -28,6 +28,10 @@ export default {
   },
 
   methods: {
+    ...mapMutations({
+      SET_LIKES: 'posts/SET_LIKES'
+    }),
+
     ...mapActions({
       getPostsAction: 'posts/getPosts',
       getMorePostsAction: 'posts/getMorePosts',
@@ -46,10 +50,12 @@ export default {
 
   mounted() {
     this.getPostsAction();
-    console.log('HERE');
     this.$echo.channel('posts')
       .listen('PostCreated', (e) => {
         this.getSinglePostAction(e.post_id);
+      })
+      .listen('PostLiked', (e) => {
+        this.SET_LIKES({ postId: e.post_id, likeCount: e.likes });
       });
   }
 };

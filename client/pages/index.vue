@@ -5,6 +5,8 @@
     </div>
 
     <AppPost v-for="post in posts" :key="post.id" :post="post" />
+
+    <div v-observe-visibility="visibilityChanged"></div>
   </div>
 </template>
 
@@ -12,6 +14,12 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
+  data() {
+    return {
+      page: 1
+    }
+  },
+
   computed: {
     ...mapGetters({
       posts: 'posts/posts'
@@ -20,8 +28,18 @@ export default {
 
   methods: {
     ...mapActions({
-      getPostsAction: 'posts/getPosts'
-    })
+      getPostsAction: 'posts/getPosts',
+      getMorePostsAction: 'posts/getMorePosts',
+    }),
+
+    visibilityChanged(isVisible) {
+      if (!isVisible) {
+        return;
+      }
+
+      ++this.page
+      this.getMorePostsAction(this.page);
+    }
   },
 
   mounted() {

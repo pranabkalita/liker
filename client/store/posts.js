@@ -19,6 +19,10 @@ export default {
 
     SET_PREPENDED_POSTS(state, post) {
       state.prependedPosts = [post, ...state.prependedPosts];
+    },
+
+    SET_APPEND_POSTS(state, posts) {
+      state.posts = [...state.posts, ...posts];
     }
   },
 
@@ -33,6 +37,14 @@ export default {
       let posts = await this.$axios.get("api/posts");
 
       commit("SET_POSTS", posts.data.data);
+    },
+
+    async getMorePosts({ commit, state }, page) {
+      let posts = await this.$axios.get(
+        `api/posts?page=${page}&skip=${state.prependedPosts.length}`
+      );
+
+      commit("SET_APPEND_POSTS", posts.data.data);
     }
   }
 };
